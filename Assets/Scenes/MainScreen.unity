@@ -2229,7 +2229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 4562560523493306581}
-  lerpTime: 1
+  lerpTime: 2
 --- !u!1001 &996142398
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4395,10 +4395,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7722929032842458911, guid: 98a06d977fbfe445a9923fe455d3c629, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
+    - target: {fileID: 7722929032842458911, guid: 98a06d977fbfe445a9923fe455d3c629, type: 3}
       propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8803354548315687488, guid: 98a06d977fbfe445a9923fe455d3c629, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 98a06d977fbfe445a9923fe455d3c629, type: 3}
 --- !u!1001 &2602971104915711921
 PrefabInstance:

@@ -1,47 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movement")]
     public float moveSpeed = 2f;
-    float horizontalInput;
     [SerializeField] float horizontalSpeed = 2f;
-    
+
+    [Header("")]
     [SerializeField] Rigidbody rb;
     [SerializeField] Collector collector;
+    [SerializeField] GameObject bulletPoint;
+
+    [Header("LevelBoundary")]
+    [SerializeField] float leftSide = -2.5f;
+    [SerializeField] float rightSide = 2.5f;
 
     bool alive = true;
-    [SerializeField] GameObject bulletPoint;
 
     void Update()
     {
         Movement();
-        ProccessShoting();
+        Shoting();
     }
 
     void Movement()
     {
         if (!alive) return;
 
-        transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed, Space.World);
+        transform.Translate(moveSpeed * Time.deltaTime * Vector3.forward, Space.World);
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            if (this.gameObject.transform.position.x > LevelBoundary.leftSide)
+            if (this.gameObject.transform.position.x > leftSide)
             {
-                transform.Translate(Vector3.left * Time.deltaTime * horizontalSpeed);
+                transform.Translate(horizontalSpeed * Time.deltaTime * Vector3.left);
             }
         }
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            if (this.gameObject.transform.position.x < LevelBoundary.rightSide)
+            if (this.gameObject.transform.position.x < rightSide)
             {
-                transform.Translate(Vector3.left * Time.deltaTime * horizontalSpeed * -1);
+                transform.Translate(-1 * horizontalSpeed * Time.deltaTime * Vector3.left);
             }
         }
 
+    }
+
+    void Shoting()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            bulletPoint.GetComponent<ShotBullet>().Fire();
+
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -61,14 +73,5 @@ public class PlayerMovement : MonoBehaviour
     void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    void ProccessShoting()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            bulletPoint.GetComponent<ShotBullet>().Fire();
-
-        }
     }
 }
