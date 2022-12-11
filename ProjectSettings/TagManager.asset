@@ -8,6 +8,7 @@ TagManager:
   - Gate
   - Collect
   - Obstacle
+  - Ui
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Water
   - UI
   - Collect
-  - 
+  - Post
   - 
   - 
   - 

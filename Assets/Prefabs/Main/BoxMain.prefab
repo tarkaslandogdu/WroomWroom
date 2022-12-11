@@ -93,7 +93,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2022585995603576463}
   - component: {fileID: 8088763264511914771}
-  - component: {fileID: 903340414313749437}
   m_Layer: 0
   m_Name: BoxMain
   m_TagString: Collect
@@ -130,15 +129,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.93934965, y: 0.41480452, z: 0.79153955}
   m_Center: {x: 0, y: 0.19051439, z: 0.0027640164}
---- !u!114 &903340414313749437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2022585995603576460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c565b224e80480ba43decc9ec03d4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
