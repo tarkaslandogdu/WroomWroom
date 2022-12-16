@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] Collector collector;
     [SerializeField] GameObject bulletPoint;
+    [SerializeField] ParticleSystem smoke;
 
     [Header("LevelBoundary")]
     [SerializeField] float leftSide = -2.5f;
@@ -81,7 +82,12 @@ public class PlayerMovement : MonoBehaviour
         alive = false;
         //Invoke(nameof(Restart), 2);
         canvas.GetComponent<UiScript>().DeathCanvas();
+        GetComponent<Animator>().SetTrigger("Death");
     }
+
+    public void SmokePlay() { smoke.Play(); }
+    public void SmokeStop() { smoke.Stop(); }
+
 
 
     void OnTriggerEnter(Collider other)

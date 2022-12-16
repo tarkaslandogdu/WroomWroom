@@ -13,6 +13,7 @@ public class UiScript : MonoBehaviour
     [SerializeField] Image soundOff;
     [SerializeField] Image soundOn;
     [SerializeField] AudioSource sounds;
+    [SerializeField] AudioSource crash; 
 
     [Header("Music")]
     [SerializeField] Image musicOff;
@@ -91,6 +92,7 @@ public class UiScript : MonoBehaviour
     {
         mainManuActive = true;
         settingsCanvas.gameObject.SetActive(false);
+        gameOverCanvas.gameObject.SetActive(false);
         mainMenuCanvas.gameObject.SetActive(true);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -99,6 +101,8 @@ public class UiScript : MonoBehaviour
     {
         gameOverCanvas.gameObject.SetActive(true);
         player.GetComponent<PlayerMovement>().gameRuning = false;
+
+        if (PlayerPrefs.GetInt("sounds") == 0) crash.Play();
     }
     public void Restart()
     {
@@ -115,6 +119,7 @@ public class UiScript : MonoBehaviour
             soundOn.gameObject.SetActive(true);
             soundOff.gameObject.SetActive(false);
             sounds.gameObject.SetActive(true);
+            crash.gameObject.SetActive(true);
             return;
         }
         if (PlayerPrefs.GetInt("sounds") == 0)
@@ -123,6 +128,7 @@ public class UiScript : MonoBehaviour
             soundOn.gameObject.SetActive(false);
             soundOff.gameObject.SetActive(true);
             sounds.gameObject.SetActive(false);
+            crash.gameObject.SetActive(false);
             return;
         }
     }
@@ -154,12 +160,14 @@ public class UiScript : MonoBehaviour
             soundOn.gameObject.SetActive(true);
             soundOff.gameObject.SetActive(false);
             sounds.gameObject.SetActive(true);
+            crash.gameObject.SetActive(true);
         }
         if (PlayerPrefs.GetInt("sounds") == 1)
         {
             soundOn.gameObject.SetActive(false);
             soundOff.gameObject.SetActive(true);
-            sounds.gameObject.SetActive(false);
+            sounds.gameObject.SetActive(true);
+            crash.gameObject.SetActive(false);
         }
         if (PlayerPrefs.GetInt("music") == 0)
         {
