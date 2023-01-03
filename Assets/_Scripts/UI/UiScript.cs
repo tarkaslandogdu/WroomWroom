@@ -1,203 +1,159 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
+using TMPro;
 
 public class UiScript : MonoBehaviour
 {
     [Header("Canvases")]
     [SerializeField] Canvas mainMenuCanvas;
     [SerializeField] Canvas settingsCanvas;
-    [SerializeField] Canvas gameOverCanvas;
 
-    [Header("Sounds")]
-    [SerializeField] Image soundOff;
-    [SerializeField] Image soundOn;
-    [SerializeField] AudioSource sounds;
-    [SerializeField] AudioSource crash; 
+    [Header("Main Menu")]
+    [SerializeField] RectTransform startMenu;
+    [SerializeField] RectTransform startMenuButtons;
+    [SerializeField] Image fade;
+    [SerializeField] TMP_Text levelCount;
+    bool faded = false;
+    [SerializeField] TMP_Text coins;
 
-    [Header("Music")]
-    [SerializeField] Image musicOff;
-    [SerializeField] Image musicOn;
-    [SerializeField] AudioSource music;
+    [Header("Settings")]
+    [SerializeField] RectTransform pauseButton;
+    [SerializeField] RectTransform pauseScreenButtons;
+    [SerializeField] RectTransform settingsButtonsMainS;
 
-    GameObject player;
-    bool mainManuActive = true;
+    [Header("Buttons")]
+    [SerializeField] float inScreenPos;
+    [SerializeField] float outOfScreenPos;
+    [SerializeField] float buttonSlideSpeed;
 
-    void Awake()
+    [Header("Joystick")]
+    [SerializeField] float joysitickUpPos;
+    [SerializeField] float joysitickDownPos;
+
+    [Header("Finish Canvas")]
+    //TODO end canvas movements
+    [Header("Bools")]
+    [SerializeField] bool mainManuActive = true;
+
+    [Header("Player")][SerializeField] GameObject player;
+
+    private void Start()
     {
-        GameObject[] canvas = GameObject.FindGameObjectsWithTag("Ui");
+        levelCount.text = "Level " + PlayerPrefs.GetInt("level").ToString();
+        coins.text = "$ " + PlayerPrefs.GetInt("coins"); 
+    }
 
-        if (canvas.Length > 1)
+    private void Update()
+    {
+        coins.text = "$ " + PlayerPrefs.GetInt("coins");
+        if (Input.GetKeyDown(KeyCode.O))
         {
-            Destroy(this.gameObject);
+            NextLevel();
         }
-
-        DontDestroyOnLoad(this.gameObject);
-    }
-    void Start()
-    {
-        gameOverCanvas.gameObject.SetActive(false);
-        SoundPreferance();
-    }
-
-    void Update()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-        PlayCarSound();
     }
 
     //Buttons
-    public void StartGame()
+    public void StartButton()
+    {
+        Invoke(nameof(StartGame), 1.75f);
+        StartCoroutine(Fade());
+
+        mainManuActive = false;
+        UiMovement(startMenu, -1500);
+        UiMovement(startMenuButtons, outOfScreenPos);
+    }
+    void StartGame()
     {
         player.GetComponent<PlayerMovement>().gameRuning = true;
-        mainManuActive = false;
-        mainMenuCanvas.gameObject.SetActive(false);
-        gameOverCanvas.gameObject.SetActive(false);
+        UiMovement(pauseButton, inScreenPos);
+        JoystickMovement(joysitickUpPos);
+    }
+
+    public void Home()
+    {
+        mainManuActive = true;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
     }
 
     public void Settings()
     {
         if (mainManuActive)
         {
-            settingsCanvas.gameObject.SetActive(true);
-            mainMenuCanvas.gameObject.SetActive(false);
-            gameOverCanvas.gameObject.SetActive(false);
+            UiMovement(startMenuButtons, outOfScreenPos);
+            UiMovement(settingsButtonsMainS, inScreenPos);
+            JoystickMovement(joysitickDownPos);
+            UiMovement(startMenu, -100);
         }
         else if (!mainManuActive)
         {
-            settingsCanvas.gameObject.SetActive(true);
-            gameOverCanvas.gameObject.SetActive(false);
             player.GetComponent<PlayerMovement>().gameRuning = false;
+            UiMovement(pauseButton, outOfScreenPos);
+            UiMovement(pauseScreenButtons, inScreenPos);
+            JoystickMovement(joysitickDownPos);
         }
+    }
+
+    public void NextLevel()
+    {
+        PlayerPrefs.SetInt("new", 0);
+        PlayerPrefs.SetInt("level", PlayerPrefs.GetInt("level") + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void Shop()
+    {
+        SceneManager.LoadScene("Shop");
     }
 
     public void Close()
     {
         if (mainManuActive)
         {
-            settingsCanvas.gameObject.SetActive(false);
-            mainMenuCanvas.gameObject.SetActive(true);
-            gameOverCanvas.gameObject.SetActive(false);
-            player.GetComponent<PlayerMovement>().gameRuning = false;
+            UiMovement(startMenuButtons, inScreenPos);
+            UiMovement(settingsButtonsMainS, outOfScreenPos);
+            JoystickMovement(joysitickDownPos);
+            UiMovement(startMenu, 0);
         }
         else if (!mainManuActive)
         {
-            settingsCanvas.gameObject.SetActive(false);
-            gameOverCanvas.gameObject.SetActive(false);
+            UiMovement(pauseButton, inScreenPos);
+            UiMovement(pauseScreenButtons, outOfScreenPos);
             player.GetComponent<PlayerMovement>().gameRuning = true;
+            JoystickMovement(joysitickUpPos);
         }
     }
 
-    public void Home()
+    void UiMovement(RectTransform rectTransform, float targetPos)
     {
-        mainManuActive = true;
-        settingsCanvas.gameObject.SetActive(false);
-        gameOverCanvas.gameObject.SetActive(false);
-        mainMenuCanvas.gameObject.SetActive(true);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        rectTransform.DOAnchorPosX(targetPos, buttonSlideSpeed);
     }
 
-    public void DeathCanvas()
+    void JoystickMovement(float pos)
     {
-        gameOverCanvas.gameObject.SetActive(true);
-        player.GetComponent<PlayerMovement>().gameRuning = false;
-
-        if (PlayerPrefs.GetInt("sounds") == 0) crash.Play();
+        player.GetComponent<PlayerMovement>().JoystickMove(pos);
     }
-    public void Restart()
+
+    IEnumerator Fade()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Invoke(nameof(StartGame), .1f);
-    }
-
-    //SesKontorl
-    public void Sound()
-    {
-        if (PlayerPrefs.GetInt("sounds") == 1)
+        if (fade.color.a == 0 || !faded)
         {
-            PlayerPrefs.SetInt("sounds", 0);
-            soundOn.gameObject.SetActive(true);
-            soundOff.gameObject.SetActive(false);
-            sounds.gameObject.SetActive(true);
-            crash.gameObject.SetActive(true);
-            return;
-        }
-        if (PlayerPrefs.GetInt("sounds") == 0)
-        {
-            PlayerPrefs.SetInt("sounds", 1);
-            soundOn.gameObject.SetActive(false);
-            soundOff.gameObject.SetActive(true);
-            sounds.gameObject.SetActive(false);
-            crash.gameObject.SetActive(false);
-            return;
-        }
-    }
-
-    public void Music()
-    {
-        if (PlayerPrefs.GetInt("music") == 1)
-        {
-            PlayerPrefs.SetInt("music", 0);
-            musicOn.gameObject.SetActive(true);
-            musicOff.gameObject.SetActive(false);
-            music.Play();
-            return;
-        }
-        if (PlayerPrefs.GetInt("music") == 0)
-        {
-            PlayerPrefs.SetInt("music", 1);
-            musicOn.gameObject.SetActive(false);
-            musicOff.gameObject.SetActive(true);
-            music.Stop();
-            return;
-        }
-    }
-
-    private void SoundPreferance()
-    {
-        if (PlayerPrefs.GetInt("sounds") == 0)
-        {
-            soundOn.gameObject.SetActive(true);
-            soundOff.gameObject.SetActive(false);
-            sounds.gameObject.SetActive(true);
-            crash.gameObject.SetActive(true);
-        }
-        if (PlayerPrefs.GetInt("sounds") == 1)
-        {
-            soundOn.gameObject.SetActive(false);
-            soundOff.gameObject.SetActive(true);
-            sounds.gameObject.SetActive(true);
-            crash.gameObject.SetActive(false);
-        }
-        if (PlayerPrefs.GetInt("music") == 0)
-        {
-            musicOn.gameObject.SetActive(true);
-            musicOff.gameObject.SetActive(false);
-            music.Play();
-        }
-        if (PlayerPrefs.GetInt("music") == 1)
-        {
-            musicOn.gameObject.SetActive(false);
-            musicOff.gameObject.SetActive(true);
-            music.Stop();
+            fade.DOFade(1, 1);
+            yield return new WaitForSeconds(1);
+            fade.DOFade(0, 1);
+            faded = true;
         }
     }
 
 
-    private void PlayCarSound()
-    {
-        if (PlayerPrefs.GetInt("sounds") == 0
-            && player.GetComponent<PlayerMovement>().gameRuning
-            && player.GetComponent<PlayerMovement>().alive)
-        {
-            if (sounds.isPlaying) return;
-            if (!sounds.isPlaying) sounds.Play();
-        }
 
-        else if (!player.GetComponent<PlayerMovement>().gameRuning
-                 && !player.GetComponent<PlayerMovement>().alive)
-        {
-            sounds.Stop();
-        }
-    }
 }

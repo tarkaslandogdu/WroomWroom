@@ -3,8 +3,12 @@ guid: 139343a8a6a27443c898f730c0fb9a7a
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
-  executionOrder: 0
+  defaultReferences:
+  - joystick: {instanceID: 0}
+  - rb: {instanceID: 0}
+  - collector: {instanceID: 0}
+  - canvas: {fileID: 6760746338986951526, guid: fbc48ee551e824ca88b869d4228c4886, type: 3}
+  executionOrder: 50
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

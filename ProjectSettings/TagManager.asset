@@ -9,6 +9,9 @@ TagManager:
   - Collect
   - Obstacle
   - Ui
+  - Settings
+  - music
+  - End
   layers:
   - Default
   - TransparentFX

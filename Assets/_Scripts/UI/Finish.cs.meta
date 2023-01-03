@@ -3,7 +3,11 @@ guid: e723555b1910447c8a012d3cca54641d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - endCanvas: {instanceID: 0}
+  - scoreCountTex: {instanceID: 0}
+  - bestScoreText: {instanceID: 0}
+  - player: {fileID: 5923539226876604065, guid: 6c35d42da7e334015ade8e2673ac6f68, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

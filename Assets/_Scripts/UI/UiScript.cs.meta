@@ -3,8 +3,16 @@ guid: a46b363b45f284f099697c76c27863c5
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
-  executionOrder: 0
+  defaultReferences:
+  - mainMenuCanvas: {instanceID: 0}
+  - settingsCanvas: {instanceID: 0}
+  - startMenu: {instanceID: 0}
+  - startMenuButtons: {instanceID: 0}
+  - pauseButton: {instanceID: 0}
+  - pauseScreenButtons: {instanceID: 0}
+  - settingsButtonsMainS: {instanceID: 0}
+  - player: {fileID: 5923539226876604065, guid: 6c35d42da7e334015ade8e2673ac6f68, type: 3}
+  executionOrder: 100
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

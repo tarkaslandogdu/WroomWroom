@@ -3,47 +3,53 @@ using TMPro;
 
 public class Finish : MonoBehaviour
 {
-    GameObject player;
     [SerializeField] Canvas endCanvas;
     [SerializeField] TMP_Text scoreCountTex = null;
     [SerializeField] TMP_Text bestScoreText = null;
 
+    Collector collector;
+    [SerializeField] GameObject player;
     float boxCount;
-
+    int coins;
 
     void Start()
     {
         endCanvas.gameObject.SetActive(false);
+        collector = player.GetComponent<Collector>();
+        coins = PlayerPrefs.GetInt("coins");
     }
+
     void Update()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        boxCount = player.GetComponent<Collector>().boxes.Count;
-        scoreCountTex.text = "You Collected " + boxCount.ToString() + " Box";
-
-        
+        boxCount = collector.boxes.Count;
+        scoreCountTex.text = boxCount.ToString() + " Box Collected!";
 
         if (player.GetComponent<PlayerMovement>().finished == false)
         {
             endCanvas.gameObject.SetActive(false);
         }
-
     }
 
     public void FinishSeq()
     {
         player.GetComponent<Animator>().SetBool("Finish", true);
-        Invoke(nameof(EndingCanvasFade), 2f);
+        Invoke(nameof(Fin), 1);
     }
 
-    void EndingCanvasFade()
+    public void EndingCanvasFade()
     {
         endCanvas.gameObject.SetActive(true);
         if (boxCount > PlayerPrefs.GetInt("bestscore"))
         {
-            PlayerPrefs.SetInt("bestscore", ((int)boxCount));
+            PlayerPrefs.SetInt("bestscore", (int)boxCount);
         }
-        bestScoreText.text = "your best: " + PlayerPrefs.GetInt("bestscore");
+        bestScoreText.text = "your best is " + PlayerPrefs.GetInt("bestscore") + " box";
+
+        PlayerPrefs.SetInt("coins", coins += (int)boxCount);
     }
 
+    void Fin()
+    {
+        StartCoroutine(player.GetComponent<Collector>().FinishSeq(.1f));
+    }
 }
