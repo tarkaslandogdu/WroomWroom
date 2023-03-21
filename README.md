@@ -1,5 +1,8 @@
 # WroomWroom
-Mobile game. Made with unity
+Mobile game made with Unity (2021.3.18).
+Made for learning purposes.
+Usage of four basic operation of mathematics within door mechanic.
+All code written by me.
 
 ## Screenshots
 ![Screen Shot 2023-03-21 at 11 17 12](https://user-images.githubusercontent.com/76121293/226553412-0bbf3de5-9d88-4b16-b274-dc631a27cca2.png)
