@@ -2,7 +2,10 @@
 Mobile game. Made with unity
 
 ## Screenshots
-![Screen Shot 2023-03-16 at 15 41 18](https://user-images.githubusercontent.com/76121293/226547932-477dbd52-f292-45c1-b685-40dc7d4941ee.png)
-![Screen Shot 2023-03-16 at 15 41 35](https://user-images.githubusercontent.com/76121293/226547937-f6ad7feb-0c3c-47f5-9a42-3d19830a5473.png)
-![Screen Shot 2023-03-16 at 15 42 03](https://user-images.githubusercontent.com/76121293/226547948-aa670bac-3503-4634-82be-80dd45bb6c18.png)
-![Screen Shot 2023-03-16 at 15 42 13](https://user-images.githubusercontent.com/76121293/226547954-205fd04c-1e95-4fec-8595-4924da7dda41.png)
+![Screen Shot 2023-03-21 at 11 17 12](https://user-images.githubusercontent.com/76121293/226553412-0bbf3de5-9d88-4b16-b274-dc631a27cca2.png)
+![Screen Shot 2023-03-21 at 11 17 35](https://user-images.githubusercontent.com/76121293/226553426-9cd3a6ac-3ec2-4915-bf8e-59a177e2af89.png)
+![Screen Shot 2023-03-21 at 11 19 27](https://user-images.githubusercontent.com/76121293/226553430-0a8fc914-de34-4329-a05e-a4fb03b0e451.png)
+![Screen Shot 2023-03-21 at 11 17 48](https://user-images.githubusercontent.com/76121293/226553432-33cf561c-8801-4452-87d6-de8fc5560e74.png)
+![Screen Shot 2023-03-21 at 11 19 42](https://user-images.githubusercontent.com/76121293/226553434-2a42c1df-6499-413a-a713-f065d6108db2.png)
+![Screen Shot 2023-03-21 at 11 18 45](https://user-images.githubusercontent.com/76121293/226553436-676f1b86-835e-46b0-8e8b-48f3a4fa4c9f.png)
+![Screen Shot 2023-03-21 at 11 18 12](https://user-images.githubusercontent.com/76121293/226553446-17fb8119-905a-4ed9-a72f-4e51799458aa.png)
